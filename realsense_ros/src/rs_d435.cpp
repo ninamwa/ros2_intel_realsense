@@ -25,7 +25,6 @@ RealSenseD435::RealSenseD435(rs2::context ctx, rs2::device dev, rclcpp::Node & n
   for (auto & stream : IMAGE_STREAMS) {
     setupStream(stream);
   }
-  std::cout << "checking optical frame id:" << std::endl;
   node_.declare_parameter("optical_frame_id");
   if (node_.has_parameter("optical_frame_id")) {
     node_.get_parameter("optical_frame_id",optical_frame_id);

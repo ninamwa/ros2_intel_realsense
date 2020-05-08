@@ -29,9 +29,9 @@ from launch_ros.descriptions import ComposableNode
 
 def generate_launch_description():
     # config the serial number and base frame id of each camera
-    camera1_base_frame_id = LaunchConfiguration('base_frame_id', default='camera1_link')
-    camera2_base_frame_id = LaunchConfiguration('base_frame_id', default='camera2_link')
-    camera3_base_frame_id = LaunchConfiguration('base_frame_id', default='camera3_link')
+    camera1_base_frame_id = LaunchConfiguration('base_frame_id', default='d435_base_front_link')
+    camera2_base_frame_id = LaunchConfiguration('base_frame_id', default='d435_base_right_link')
+    camera3_base_frame_id = LaunchConfiguration('base_frame_id', default='d435_base_left_link')
     camera1_serial_no = LaunchConfiguration('serial_no', default="'831612071154'")
     camera2_serial_no = LaunchConfiguration('serial_no', default="'011422070886'")
     camera3_serial_no = LaunchConfiguration('serial_no', default="'12'")
@@ -46,9 +46,11 @@ def generate_launch_description():
         node_namespace="/camera1",
         output='screen',
         emulate_tty=True,
+        remappings=[('/camera1/camera/pointcloud','/points2_1')],
         parameters=[{'serial_no':camera1_serial_no, 
 		     'optical_frame_id': camera1_optical_frame_id,
                     'base_frame_id': camera1_base_frame_id}]
+
         )
     camera2_node = Node(
         package='realsense_node',
@@ -56,6 +58,7 @@ def generate_launch_description():
         node_namespace="/camera2",
         output='screen',
 	emulate_tty=True,
+        remappings=[('/camera2/camera/pointcloud','/points2_2')],
         parameters=[{'serial_no': "'011422070886'", 
   	 	     'optical_frame_id': camera2_optical_frame_id,
                      'base_frame_id': camera2_base_frame_id}]
@@ -66,7 +69,8 @@ def generate_launch_description():
         node_namespace="/camera3",
         output='screen',
         emulate_tty=True,
+        remappings=[('/camera3/camera/pointcloud','/points2_3')],
         parameters=[{'serial_no':camera3_serial_no, 
                     'base_frame_id': camera3_base_frame_id}]
         )
-    return launch.LaunchDescription([camera1_node, camera2_node])
+    return launch.LaunchDescription([camera1_node,camera2_node])

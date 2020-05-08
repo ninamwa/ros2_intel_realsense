@@ -32,12 +32,14 @@ RealSenseBase::RealSenseBase(rs2::context ctx, rs2::device dev, rclcpp::Node & n
     base_frame_id_ = node_.declare_parameter("base_frame_id", DEFAULT_BASE_FRAME_ID);
   }
 
-  if (base_frame_id_ == "camera1_link"){
+  if (base_frame_id_ == "d435_base_front_link"){
     t = OPTICAL_FRAME_ID_camera1;
-  }else if (base_frame_id_ == "camera2_link"){
+  }else if (base_frame_id_ == "d435_base_right_link"){
     t = OPTICAL_FRAME_ID_camera2;
-  } else if (base_frame_id_ == "camera3_link"){
+  } else if (base_frame_id_ == "d435_base_left_link"){
     t = OPTICAL_FRAME_ID_camera3;
+  }else{
+    t = OPTICAL_FRAME_ID;
   }
 
   auto sn = dev_.get_info(RS2_CAMERA_INFO_SERIAL_NUMBER);
