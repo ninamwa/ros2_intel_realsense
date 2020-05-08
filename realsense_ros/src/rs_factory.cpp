@@ -17,6 +17,7 @@
 #include "realsense/rs_d435.hpp"
 #include "realsense/rs_d435i.hpp"
 #include "realsense/rs_t265.hpp"
+#include "iostream"
 
 namespace realsense
 {
@@ -42,12 +43,20 @@ void RealSenseNodeFactory::init()
 {
   auto param_desc = rcl_interfaces::msg::ParameterDescriptor();
   param_desc.read_only = true;
-  auto param_value = declare_parameter("serial_no");
-  if (param_value.get_type() == rclcpp::PARAMETER_NOT_SET) {
-    RCLCPP_INFO(this->get_logger(), "Device's serial number is not set, enabling the default device!");
-  } else {
-    serial_no_ = std::to_string(param_value.get<rclcpp::PARAMETER_INTEGER>());
+  declare_parameter("serial_no");
+  std::string param_value;
+  get_parameter("serial_no",param_value);
+  if (param_value.length() != 12){
+	  param_value.pop_back();
+	  param_value.erase(param_value.begin());
   }
+  serial_no_ = param_value;
+  
+  //if (param_value.get_type() == rclcpp::PARAMETER_NOT_SET) {
+  //  RCLCPP_INFO(this->get_logger(), "Device's serial number is not set, enabling the default device!");
+  //} else {
+  //  serial_no_ = param_value;
+  //}
   try {
     query_thread_ = std::thread([=]()
               {

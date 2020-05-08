@@ -110,6 +110,36 @@ namespace realsense
                                                                      {GYRO, DEFAULT_GYRO_OPTICAL_FRAME_ID},
                                                                      {POSE, DEFAULT_POSE_OPTICAL_FRAME_ID}};
 
+  const std::map<stream_index_pair, std::string> OPTICAL_FRAME_ID_camera1 = {{COLOR, "camera1_color_optical_frame_link"},
+                                                                     {DEPTH, "camera1_depth_optical_frame_link"},
+                                                                     {INFRA1, "camera1_infra1_optical_frame_link"},
+                                                                     {INFRA2, "camera1_infra2_optical_frame_link"},
+                                                                     {FISHEYE1, "camera1_fisheye1_optical_frame_link"},
+                                                                     {FISHEYE2, "camera1_fisheye2_optical_frame_link"},
+                                                                     {ACCEL, "camera1_accel_optical_frame_link"},
+                                                                     {GYRO, "camera1_gyro_optical_frame_link"},
+                                                                     {POSE, "camera1_pose_optical_frame_link"}};
+
+  const std::map<stream_index_pair, std::string> OPTICAL_FRAME_ID_camera2 = {{COLOR, "camera2_color_optical_frame_link"},
+                                                                     {DEPTH, "camera2_depth_optical_frame_link"},
+                                                                     {INFRA1, "camera2_infra1_optical_frame_link"},
+                                                                     {INFRA2, "camera2_infra2_optical_frame_link"},
+                                                                     {FISHEYE1, "camera2_fisheye1_optical_frame_link"},
+                                                                     {FISHEYE2, "camera2_fisheye2_optical_frame_link"},
+                                                                     {ACCEL, "camera2_accel_optical_frame_link"},
+                                                                     {GYRO, "camera2_gyro_optical_frame_link"},
+                                                                     {POSE, "camera2_pose_optical_frame_link"}};
+
+  const std::map<stream_index_pair, std::string> OPTICAL_FRAME_ID_camera3 = {{COLOR, "camera3_color_optical_frame_link"},
+                                                                     {DEPTH, "camera3_depth_optical_frame_link"},
+                                                                     {INFRA1, "camera3_infra1_optical_frame_link"},
+                                                                     {INFRA2, "camera3_infra2_optical_frame_link"},
+                                                                     {FISHEYE1, "camera3_fisheye1_optical_frame_link"},
+                                                                     {FISHEYE2, "camera3_fisheye2_optical_frame_link"},
+                                                                     {ACCEL, "camera3_accel_optical_frame_link"},
+                                                                     {GYRO, "camera3_gyro_optical_frame_link"},
+                                                                     {POSE, "camera3_pose_optical_frame_link"}};
+
   const std::map<stream_index_pair, std::string> SAMPLE_TOPIC = {{COLOR, "camera/color/image_raw"},
                                                                  {DEPTH, "camera/depth/image_rect_raw"},
                                                                  {INFRA1, "camera/infra1/image_rect_raw"},

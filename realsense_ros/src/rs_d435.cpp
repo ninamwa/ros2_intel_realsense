@@ -15,6 +15,7 @@
 #include <opencv2/opencv.hpp>
 #include "sensor_msgs/point_cloud2_iterator.hpp"
 #include "realsense/rs_d435.hpp"
+#include "iostream"
 
 namespace realsense
 {
@@ -23,6 +24,13 @@ RealSenseD435::RealSenseD435(rs2::context ctx, rs2::device dev, rclcpp::Node & n
 { 
   for (auto & stream : IMAGE_STREAMS) {
     setupStream(stream);
+  }
+  std::cout << "checking optical frame id:" << std::endl;
+  node_.declare_parameter("optical_frame_id");
+  if (node_.has_parameter("optical_frame_id")) {
+    node_.get_parameter("optical_frame_id",optical_frame_id);
+  } else {
+    optical_frame_id = node_.declare_parameter("optical_frame_id", DEFAULT_COLOR_OPTICAL_FRAME_ID);
   }
 
   if (node_.has_parameter("align_depth")) {
@@ -214,7 +222,7 @@ void RealSenseD435::publishSparsePointCloud(const rs2::points & points, const rs
     //RCLCPP_INFO(node_->get_logger(), "timestamp: %f, address: %p", t.seconds(), reinterpret_cast<std::uintptr_t>(pc_msg.get()));
     //
     pc_msg->header.stamp = time;
-    pc_msg->header.frame_id = DEFAULT_COLOR_OPTICAL_FRAME_ID;
+    pc_msg->header.frame_id = optical_frame_id;
     pc_msg->width = valid_indices.size();
     pc_msg->height = 1;
     pc_msg->point_step = 3 * sizeof(float) + 3 * sizeof(uint8_t);
@@ -265,7 +273,7 @@ void RealSenseD435::publishSparsePointCloud(const rs2::points & points, const rs
     //RCLCPP_INFO(node_->get_logger(), "timestamp: %f, address: %p", t.seconds(), reinterpret_cast<std::uintptr_t>(pc_msg.get()));
     //
     pc_msg->header.stamp = time;
-    pc_msg->header.frame_id = DEFAULT_COLOR_OPTICAL_FRAME_ID;
+    pc_msg->header.frame_id = optical_frame_id;
     pc_msg->width = valid_indices.size();
     pc_msg->height = 1;
     pc_msg->point_step = 3 * sizeof(float) + 3 * sizeof(uint8_t);
@@ -322,7 +330,7 @@ void RealSenseD435::publishDensePointCloud(const rs2::points & points, const rs2
     //RCLCPP_INFO(node_->get_logger(), "timestamp: %f, address: %p", t.seconds(), reinterpret_cast<std::uintptr_t>(pc_msg.get()));
     //
     pc_msg->header.stamp = time;
-    pc_msg->header.frame_id = DEFAULT_COLOR_OPTICAL_FRAME_ID;
+    pc_msg->header.frame_id = optical_frame_id;
     pc_msg->width = color_frame.get_width();
     pc_msg->height = color_frame.get_height();
     pc_msg->point_step = 3 * sizeof(float) + 3 * sizeof(uint8_t);
@@ -364,7 +372,7 @@ void RealSenseD435::publishDensePointCloud(const rs2::points & points, const rs2
     //RCLCPP_INFO(node_->get_logger(), "timestamp: %f, address: %p", t.seconds(), reinterpret_cast<std::uintptr_t>(pc_msg.get()));
     //
     pc_msg->header.stamp = time;
-    pc_msg->header.frame_id = DEFAULT_COLOR_OPTICAL_FRAME_ID;
+    pc_msg->header.frame_id = optical_frame_id;
     pc_msg->width = color_frame.get_width();
     pc_msg->height =  color_frame.get_height();
     pc_msg->point_step = 3 * sizeof(float) + 3 * sizeof(uint8_t);

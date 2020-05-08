@@ -123,6 +123,8 @@ protected:
   std::map<stream_index_pair, rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr> imu_pub_;
   std::map<stream_index_pair, rclcpp::Publisher<realsense_msgs::msg::IMUInfo>::SharedPtr> imu_info_pub_;
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
+
+  std::map<stream_index_pair, std::string> t;
 };
 }  // namespace realsense
 #endif  // REALSENSE__RS_BASE_HPP_
